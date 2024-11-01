@@ -37,7 +37,7 @@ class Structure:
         #finds where the zero is and where the index is
         self.where_is_zero = numpy.where(self.grid==0)[0][0]
         #note that this counts the index from zero
-
+    '''
     def corner_ops(self, direction):
         #top left corner
         if self.grid[self.where_is_zero] == 1:
@@ -45,8 +45,9 @@ class Structure:
         if self.grid[self.where_is_zero] == 3:
         if self.grid[self.where_is_zero] == 7:
         if self.grid[self.where_is_zero] == 9:
-
+    '''
     #black magic tuple swapping lol
     def swap_left(self):
         self.grid[self.where_is_zero], self.grid[self.where_is_zero - 1] = self.grid[self.where_is_zero - 1], self.grid[self.where_is_zero]
 
+x = Structure()
