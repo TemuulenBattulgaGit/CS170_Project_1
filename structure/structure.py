@@ -11,9 +11,8 @@ class Structure:
         self.first_row = None
         self.second_row = None
         self.third_row = None
-
+        self.where_is_zero = None
         '''ok what do we do for operators...'''
-        self.
 
     def askforgrid(self):
         sys.output("Please enter your puzzle, using a zero to represent the blank")
@@ -35,4 +34,19 @@ class Structure:
         for charin in self.third_row.split(" "):
             self.grid[counter] = int(charin)
             counter += 1
+        #finds where the zero is and where the index is
+        self.where_is_zero = numpy.where(self.grid==0)[0][0]
+        #note that this counts the index from zero
+
+    def corner_ops(self, direction):
+        #top left corner
+        if self.grid[self.where_is_zero] == 1:
+            if (direction == )
+        if self.grid[self.where_is_zero] == 3:
+        if self.grid[self.where_is_zero] == 7:
+        if self.grid[self.where_is_zero] == 9:
+
+    #black magic tuple swapping lol
+    def swap_left(self):
+        self.grid[self.where_is_zero], self.grid[self.where_is_zero - 1] = self.grid[self.where_is_zero - 1], self.grid[self.where_is_zero]
 
