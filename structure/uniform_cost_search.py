@@ -14,14 +14,14 @@ class UniformCostSearch(structure):
     def search(self):
         """Perform the Uniform Cost Search with DP-style memoization."""
         # Initialize the priority queue with the start state as a tuple
-        heapq.heappush(self.frontier, (0, tuple(self.grid), 0, []))  #(cost, state, depth, path)
-        self.explored[tuple(self.grid)] = 0  #Start state cost is 0
+        heapq.heappush(self.frontier, (0, tuple(self.grid[0]), 0, []))  #(cost, state, depth, path)
+        self.explored[tuple(self.grid[0])] = 0  #Start state cost is 0
 
         while self.frontier:
             # Pop the node with the lowest cumulative cost
             cumulative_cost, current_state, depth, path = heapq.heappop(self.frontier)
-            self.set_grid(current_state)  # Set grid based on the current state
-            self.expanded_nodes += 1  # Increment the expanded nodes counter
+            self.set_grid(current_state)  # Set grid to the current state
+            self.expanded_nodes += 1 # Increment the expanded nodes counter
 
             # Check if this state is the goal
             if current_state == self.goal_state:
@@ -35,9 +35,9 @@ class UniformCostSearch(structure):
             self.explored[current_state] = cumulative_cost
 
             for move in self.possible_moves():
-                self.set_grid(current_state)  # Reset to current state before each move
-                self.move(move)
-                new_state_tuple = tuple(self.grid)  # Convert new state to tuple for compatibility
+                self.set_grid(current_state)  # Reset to the current state before each move
+                self.move(move)  # Execute the move
+                new_state_tuple = tuple(self.grid[0])  # Convert new state to tuple for compatibility
 
                 # Calculate new cost to reach this new state
                 new_cost = cumulative_cost + 1  #keep track of uniform cost
