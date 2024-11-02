@@ -20,3 +20,36 @@ class UniformCostSearch(structure):
             cumulative_cost, current_state, depth, path = heapq.heappop(self.frontier)
             self.set_grid(current_state)  # Set grid based on the current state
             self.expanded_nodes += 1  # Increment the expanded nodes counter
+
+            # Check if this state is the goal
+            if current_state == self.goal_state:
+                print("Goal reached with cost:", cumulative_cost)
+                print("Total moves to reach the goal (depth of the goal node):", depth)
+                print("Path to goal:", path)
+                self.display_results()
+                return depth
+
+            # Mark the current state as explored
+            self.explored[current_state] = cumulative_cost
+
+            for move in self.possible_moves():
+                self.set_grid(current_state)  # Reset to current state before each move
+                self.move(move)
+                new_state_tuple = tuple(self.grid)  # Convert new state to tuple for compatibility
+
+                # Calculate new cost to reach this new state
+                new_cost = cumulative_cost + 1  #keep track of uniform cost
+
+                # Check if this new state has been explored with a lower cost
+                if new_state_tuple not in self.explored or new_cost < self.explored[new_state_tuple]:
+                    # If new or cheaper, update the explored set and add to frontier
+                    self.explored[new_state_tuple] = new_cost
+                    new_path = path + [move]
+                    heapq.heappush(self.frontier, (new_cost, new_state_tuple, depth + 1, new_path))
+
+            print("Goal not reachable.")
+            return None
+
+    def display_results(self):
+        print("Goal state reached")
+        print(f"\nTo solve the problem, the search algorithm expanded a total of {self.expanded_nodes} nodes.")
