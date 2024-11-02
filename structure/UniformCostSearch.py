@@ -13,3 +13,12 @@ class UniformCostSearch(structure):
 
     def is_explored(self, state):
         return state in self.explored_states
+
+    def add_to_frontier(self, state):
+        self.frontier.append(state)
+
+    def get_next_state(self):
+        if self.frontier:
+            return self.frontier.pop(0)
+        return None
+
