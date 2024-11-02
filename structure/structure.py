@@ -12,30 +12,33 @@ class Structure:
         self.second_row = None
         self.third_row = None
         self.where_is_zero = None
+        self.askforgrid()
+        self.convert_rows_to_vector()
+        print(self.grid)
         '''ok what do we do for operators...'''
 
     def askforgrid(self):
-        sys.output("Please enter your puzzle, using a zero to represent the blank")
-        sys.output("Enter the first row, use spaces or tabs between numbers")
+        print("Please enter your puzzle, using a zero to represent the blank")
+        print("Enter the first row, use spaces or tabs between numbers")
         self.first_row = input()
-        sys.output("Enter the second row, use spaces or tabs between numbers")
+        print("Enter the second row, use spaces or tabs between numbers")
         self.second_row = input()
-        sys.output("Enter the third row, use spaces or tabs between numbers")
+        print("Enter the third row, use spaces or tabs between numbers")
         self.third_row = input()
 
     def convert_rows_to_vector(self):
         counter = 0
         for charin in self.first_row.split(" "):
-            self.grid[counter] = int(charin)
+            self.grid[0][counter] = int(charin)
             counter += 1
         for charin in self.second_row.split(" "):
-            self.grid[counter] = int(charin)
+            self.grid[0][counter] = int(charin)
             counter += 1
         for charin in self.third_row.split(" "):
-            self.grid[counter] = int(charin)
+            self.grid[0][counter] = int(charin)
             counter += 1
         #finds where the zero is and where the index is
-        self.where_is_zero = numpy.where(self.grid==0)[0][0]
+        self.where_is_zero = numpy.where(self.grid[0]==0)[0][0]
         #note that this counts the index from zero
     '''
     def corner_ops(self, direction):
@@ -55,7 +58,3 @@ class Structure:
         self.grid[self.where_is_zero], self.grid[self.where_is_zero - 3] = self.grid[self.where_is_zero - 3], self.grid[self.where_is_zero]
     def swap_down(self):
         self.grid[self.where_is_zero], self.grid[self.where_is_zero + 3] = self.grid[self.where_is_zero + 3], self.grid[self.where_is_zero]
-
-
-
-x = Structure()
