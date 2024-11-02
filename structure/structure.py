@@ -2,7 +2,7 @@ import numpy
 import sys
 ###how do we make a 3x3 grid into a class?
 
-class Structure:
+class structure:
     def __init__(self):
         ##ok what do I want here
         '''let's flatten our 3x3 into a vector'''
@@ -58,3 +58,4 @@ class Structure:
         self.grid[self.where_is_zero], self.grid[self.where_is_zero - 3] = self.grid[self.where_is_zero - 3], self.grid[self.where_is_zero]
     def swap_down(self):
         self.grid[self.where_is_zero], self.grid[self.where_is_zero + 3] = self.grid[self.where_is_zero + 3], self.grid[self.where_is_zero]
+
