@@ -49,5 +49,13 @@ class Structure:
     #black magic tuple swapping lol
     def swap_left(self):
         self.grid[self.where_is_zero], self.grid[self.where_is_zero - 1] = self.grid[self.where_is_zero - 1], self.grid[self.where_is_zero]
+    def swap_right(self):
+        self.grid[self.where_is_zero], self.grid[self.where_is_zero + 1] = self.grid[self.where_is_zero + 1], self.grid[self.where_is_zero]
+    def swap_up(self):
+        self.grid[self.where_is_zero], self.grid[self.where_is_zero - 3] = self.grid[self.where_is_zero - 3], self.grid[self.where_is_zero]
+    def swap_down(self):
+        self.grid[self.where_is_zero], self.grid[self.where_is_zero + 3] = self.grid[self.where_is_zero + 3], self.grid[self.where_is_zero]
+
+
 
 x = Structure()
