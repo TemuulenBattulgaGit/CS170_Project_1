@@ -22,3 +22,5 @@ class UniformCostSearch(structure):
             return self.frontier.pop(0)
         return None
 
+    def is_goal(self, state):
+        return state == self.goal_state
