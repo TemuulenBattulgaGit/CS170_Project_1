@@ -17,6 +17,10 @@ class Structure:
         print(self.grid)
         '''ok what do we do for operators...'''
 
+
+        '''For tracking state, etc'''
+        self.state_hash = None
+
     def askforgrid(self):
         print("Please enter your puzzle, using a zero to represent the blank")
         print("Enter the first row, use spaces or tabs between numbers")
@@ -58,3 +62,17 @@ class Structure:
         self.grid[self.where_is_zero], self.grid[self.where_is_zero - 3] = self.grid[self.where_is_zero - 3], self.grid[self.where_is_zero]
     def swap_down(self):
         self.grid[self.where_is_zero], self.grid[self.where_is_zero + 3] = self.grid[self.where_is_zero + 3], self.grid[self.where_is_zero]
+
+    #goal state is here
+    def are_we_there_yet(self):
+        goal = [1,2,3,4,5,6,7,8,0]
+        return all(self.grid[0][i] == goal[i] for i in range(9))
+
+    #need some kind of functional to take our tuple/array and flatten it so we can compare
+    # Tried base 2 and ran into problems, using base 9
+    def state_to_hash(self):
+        val = 0
+        for num in self.grid[0]:
+            val = val*9 + int(num)
+        self.state_hash = val
+
