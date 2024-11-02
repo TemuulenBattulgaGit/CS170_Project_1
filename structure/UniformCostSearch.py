@@ -14,3 +14,9 @@ class UniformCostSearch(structure):
         # Initialize the priority queue with the start state as a tuple
         heapq.heappush(self.frontier, (0, tuple(self.grid), 0, []))  #(cost, state, depth, path)
         self.explored[tuple(self.grid)] = 0  #Start state cost is 0
+
+        while self.frontier:
+            # Pop the node with the lowest cumulative cost
+            cumulative_cost, current_state, depth, path = heapq.heappop(self.frontier)
+            self.set_grid(current_state)  # Set grid based on the current state
+            self.expanded_nodes += 1  # Increment the expanded nodes counter
