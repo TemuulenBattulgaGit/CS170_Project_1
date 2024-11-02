@@ -2,12 +2,14 @@ import heapq
 from structure import structure
 
 class UniformCostSearch(structure):
-    def __init__(self, start_state, goal_state=[1, 2, 3, 4, 5, 6, 7, 8, 0]):
+    def __init__(self, start_state, goal_state=None):
         super().__init__(start_state)
-        self.goal_state = tuple(goal_state)  # Store goal state as tuple
+        # If goal_state is not provided, use the default 8-puzzle goal state
+        self.goal_state = tuple(goal_state if goal_state is not None else [1, 2, 3, 4, 5, 6, 7, 8, 0])
         self.frontier = []
-        self.explored = {}  #Dictionary to store the lowest cost to reach each state
-        self.expanded_nodes = 0  #Counter for expanded nodes
+        self.explored = {}  # Dictionary to store the lowest cost to reach each state
+        self.expanded_nodes = 0  # Counter for expanded nodes
+
 
     def search(self):
         """Perform the Uniform Cost Search with DP-style memoization."""
