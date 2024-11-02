@@ -24,3 +24,16 @@ class UniformCostSearch(structure):
 
     def is_goal(self, state):
         return state == self.goal_state
+
+    def get_neighbors(self, state):
+        """Generate possible moves (neighbors) from the current state in a 1D array format."""
+        neighbors = []
+        zero_index = state.index(0)
+
+        # Define possible moves based on zero's index in the 1D array
+        moves = {
+            'left': zero_index - 1 if zero_index % 3 != 0 else None,
+            'right': zero_index + 1 if zero_index % 3 != 2 else None,
+            'up': zero_index - 3 if zero_index >= 3 else None,
+            'down': zero_index + 3 if zero_index < 6 else None
+        }

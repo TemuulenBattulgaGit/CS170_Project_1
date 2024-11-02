@@ -21,4 +21,6 @@ def test_structure():
     finally:
         sys.stdin = original_stdin
 
+
+
 test_structure()
