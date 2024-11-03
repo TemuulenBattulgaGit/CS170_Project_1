@@ -16,3 +16,17 @@ class AStarSearch(structure):
             if state[i] != 0 and state[i] != self.goal_state[i]:  #gotta ignore blank tile
                 heuristic_cost +=1
         return heuristic_cost
+
+    def euclidean_distance_heuristic(self, state):
+        """for calculating the sum of Euclidean distances of each tile from its goal position."""
+        heuristic_cost_euclidian = 0
+        for i in range(9):
+            if state[i] != 0:  #again gotta ignore blank tile
+                #getting current position in 3x3 grid
+                current_row, current_col = divmod(i, 3)
+                #goal position in 3x3 grid
+                goal_position = self.goal_state.index(state[i])
+                goal_row, goal_col = divmod(goal_position, 3)
+                #actually calculating Euclidean distance
+                heuristic_cost_euclidian += np.sqrt((current_row - goal_row) ** 2 + (current_col - goal_col) ** 2)
+        return heuristic_cost_euclidian
