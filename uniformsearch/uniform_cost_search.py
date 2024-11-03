@@ -1,7 +1,7 @@
 import heapq
 from structure import structure
 
-class UniformCostSearch(structure):
+class UniformCostSearch(structure.Structure):
     def __init__(self, start_state, goal_state=None):
         super().__init__(start_state)
         # If goal_state is not provided, use the default 8-puzzle goal state

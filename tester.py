@@ -3,7 +3,7 @@ import numpy
 from structure import *
 import io
 
-from structure.structure import structure
+from structure.structure import *
 from uniformsearch.uniform_cost_search import UniformCostSearch
 
 def test_structure():
