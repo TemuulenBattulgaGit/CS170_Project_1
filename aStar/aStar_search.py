@@ -53,5 +53,28 @@ class AStarSearch(structure):
 
             #check if current state is the goal state
             if current_state == tuple(self.goal_state):
-                self.display_steps_to_goal(path, g_cost)
+                self.display_steps_to_goal(path, g_cost) #for displaying the steps
                 return path
+
+            #generating valid moves
+            for move in self.get_valid_moves():
+                self.set_grid(current_state)  #reset to current state before each move
+                self.move(move)  #execute the move
+                new_state_tuple = tuple(self.grid[0])
+
+                #compute hash and check if this current state has been visited
+                new_hash = self.state_to_hash()
+                if new_hash not in self.tracking: #if not visited before
+                    #new f-cost
+                    new_g_cost = g_cost + 1  #g-cost is +1 per move
+                    # h-cost depends on which heuristic chosen
+                    new_h_cost = self.heuristic_fn(new_state_tuple)
+                    new_f_cost = new_g_cost + new_h_cost
+                    new_path = path + [(move, new_state_tuple, new_g_cost, new_h_cost)]
+
+                    #if not add it to visited
+                    heapq.heappush(self.frontier, (new_f_cost, new_g_cost, new_state_tuple, new_path))
+                    self.tracking.__insert__(new_hash) #mark as visited
+
+        print("Goal State not reachable.")
+        return None
