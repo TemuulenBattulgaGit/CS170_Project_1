@@ -17,7 +17,7 @@ class AStarSearch(structure):
             self.heuristic_fn = self.missing_tile_heuristic
 
     def missing_tile_heuristic(self, state):
-        """counts the number of tiles out of place compared to the goal state."""
+        """counts the number of tiles that is out of place compared to the goal state"""
         heuristic_cost = 0
         for i in range(9):
             if state[i] != 0 and state[i] != self.goal_state[i]:  #gotta ignore blank tile
@@ -25,15 +25,23 @@ class AStarSearch(structure):
         return heuristic_cost
 
     def euclidean_distance_heuristic(self, state):
-        """for calculating the sum of Euclidean distances of each tile from its goal position"""
         heuristic_cost_euclidian = 0
         for i in range(9):
-            if state[i] != 0:  #again gotta ignore blank tile
+            if state[i] != 0:  #again, gotta ignore blank tile
                 #getting current position in 3x3 grid
                 current_row, current_col = divmod(i, 3)
                 #goal position in 3x3 grid
                 goal_position = self.goal_state.index(state[i])
                 goal_row, goal_col = divmod(goal_position, 3)
-                #actually calculating Euclidean distance
+                #actually calculating the Euclidean distance
                 heuristic_cost_euclidian += np.sqrt((current_row - goal_row) ** 2 + (current_col - goal_col) ** 2)
         return heuristic_cost_euclidian
+
+    def search(self):
+        """aStar search"""
+        #initializing the priority queue with the start state as tuple
+        initial_state_tuple = tuple(self.grid[0])
+        heapq.heappush(self.frontier, (0 + self.heuristic_fn(initial_state_tuple), 0, initial_state_tuple, []))  #(f-cost, g-cost, state, path)
+        initial_hash = self.state_to_hash()  #using structure's state_to_hash function
+        self.tracking.__insert__(initial_hash)
+
