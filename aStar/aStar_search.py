@@ -9,6 +9,7 @@ class AStarSearch(structure):
         self.set_grid(start_state)
         self.goal_state = goal_state if goal_state else [1, 2, 3, 4, 5, 6, 7, 8, 0]
         self.tracking = StateList()  #stateList to track visited states
+        self.expanded_nodes = 0 #keep track of total expanded nodes
 
         #set the heuristic function based on user input
         if heuristic == 'euclidean':
@@ -50,6 +51,7 @@ class AStarSearch(structure):
             f_cost, g_cost, current_state, path = heapq.heappop(self.frontier)
             #set grid to current state
             self.set_grid(current_state)
+            self.expanded_nodes += 1
 
             #check if current state is the goal state
             if current_state == tuple(self.goal_state):
@@ -78,3 +80,19 @@ class AStarSearch(structure):
 
         print("Goal State not reachable.")
         return None
+
+    @staticmethod
+    def display_steps_to_goal(path, total_cost):
+        print("Solution path to the goal:")
+        print(f"Total moves to reach the goal: {len(path)}")
+        print(f"Total cost (g-cost): {total_cost}\n")
+
+        for step_number, (move, state, g_cost, h_cost) in enumerate(path, start=1):
+            print(f"Step {step_number}: Move '{move}'")
+            print(f"g-cost: {g_cost}, h-cost: {h_cost}")
+            print(f"{np.array(state).reshape(3, 3)}\n")
+
+        print("Goal state reached successfully.\n")
+
+    def display_results(self):
+        print(f"Total unique states encountered: {len(self.tracking.states)}")
