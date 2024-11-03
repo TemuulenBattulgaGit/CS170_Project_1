@@ -23,7 +23,7 @@ class UniformCostSearch(structure.Structure):
             self.set_grid(current_state)  # Set grid to the current state
             self.expanded_nodes += 1 # Increment the expanded nodes counter
 
-            # Check if this state is the goal
+            #Check if this state is the goal
             if current_state == self.goal_state:
                 print("Goal reached with cost:", cumulative_cost)
                 print("Total moves to reach the goal (depth of the goal node):", depth)
