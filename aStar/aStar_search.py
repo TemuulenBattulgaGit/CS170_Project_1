@@ -45,3 +45,13 @@ class AStarSearch(structure):
         initial_hash = self.state_to_hash()  #using structure's state_to_hash function
         self.tracking.__insert__(initial_hash)
 
+        while self.frontier:
+            #pop the state with the lowest f-cost (f = g + h)
+            f_cost, g_cost, current_state, path = heapq.heappop(self.frontier)
+            #set grid to current state
+            self.set_grid(current_state)
+
+            #check if current state is the goal state
+            if current_state == tuple(self.goal_state):
+                self.display_steps_to_goal(path, g_cost)
+                return path
