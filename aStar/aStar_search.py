@@ -4,10 +4,17 @@ import heapq
 from structure import structure
 
 class AStarSearch(structure):
-    def __init__(self, start_state, goal_state=None):
+    def __init__(self, start_state, goal_state=None, heuristic='missing'):
         super().__init__()
         self.set_grid(start_state)
         self.goal_state = goal_state if goal_state else [1, 2, 3, 4, 5, 6, 7, 8, 0]
+        self.tracking = StateList()  #stateList to track visited states
+
+        #set the heuristic function based on user input
+        if heuristic == 'euclidean':
+            self.heuristic_fn = self.euclidean_distance_heuristic
+        else:
+            self.heuristic_fn = self.missing_tile_heuristic
 
     def missing_tile_heuristic(self, state):
         """counts the number of tiles out of place compared to the goal state."""
@@ -18,7 +25,7 @@ class AStarSearch(structure):
         return heuristic_cost
 
     def euclidean_distance_heuristic(self, state):
-        """for calculating the sum of Euclidean distances of each tile from its goal position."""
+        """for calculating the sum of Euclidean distances of each tile from its goal position"""
         heuristic_cost_euclidian = 0
         for i in range(9):
             if state[i] != 0:  #again gotta ignore blank tile
