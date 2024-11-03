@@ -7,7 +7,7 @@ class UniformCostSearch(structure):
         # If goal_state is not provided, use the default 8-puzzle goal state
         self.goal_state = tuple(goal_state if goal_state is not None else [1, 2, 3, 4, 5, 6, 7, 8, 0])
         self.frontier = []
-        self.explored = {}  # Dictionary to store the lowest cost to reach each state
+        self.explored = {}  # memory to store the lowest cost to reach each state
         self.expanded_nodes = 0  # Counter for expanded nodes
 
 
