@@ -1,11 +1,11 @@
 import numpy
 import sys
 from collections import deque
-from statelist import StateList
+from structure.statelist import StateList
 ###how do we make a 3x3 grid into a class?
 
 class Structure:
-    def __init__(self):
+    def __init__(self, start_state=None):
         ##ok what do I want here
         '''let's flatten our 3x3 into a vector'''
         self.grid = numpy.zeros([1,9])
@@ -14,8 +14,15 @@ class Structure:
         self.second_row = None
         self.third_row = None
         self.where_is_zero = None
-        self.askforgrid()
-        self.convert_rows_to_vector()
+        if start_state is None:
+            # If no start state provided, ask
+            self.askforgrid()
+            self.convert_rows_to_vector()
+        else:
+            # If start state provided, then just get started
+            self.grid = numpy.array(start_state).reshape(1, 9)
+            self.where_is_zero = numpy.where(self.grid[0] == 0)[0][0]
+
         print(self.grid)
         '''ok what do we do for operators...'''
 
@@ -55,15 +62,21 @@ class Structure:
         if self.grid[self.where_is_zero] == 7:
         if self.grid[self.where_is_zero] == 9:
     '''
-    #black magic tuple swapping lol
     def swap_left(self):
-        self.grid[self.where_is_zero], self.grid[self.where_is_zero - 1] = self.grid[self.where_is_zero - 1], self.grid[self.where_is_zero]
+        self.grid[0][self.where_is_zero], self.grid[0][self.where_is_zero - 1] = self.grid[0][self.where_is_zero - 1], self.grid[0][self.where_is_zero]
+        self.where_is_zero = self.where_is_zero - 1
+
     def swap_right(self):
-        self.grid[self.where_is_zero], self.grid[self.where_is_zero + 1] = self.grid[self.where_is_zero + 1], self.grid[self.where_is_zero]
+        self.grid[0][self.where_is_zero], self.grid[0][self.where_is_zero + 1] = self.grid[0][self.where_is_zero + 1], self.grid[0][self.where_is_zero]
+        self.where_is_zero = self.where_is_zero + 1
+
     def swap_up(self):
-        self.grid[self.where_is_zero], self.grid[self.where_is_zero - 3] = self.grid[self.where_is_zero - 3], self.grid[self.where_is_zero]
+        self.grid[0][self.where_is_zero], self.grid[0][self.where_is_zero - 3] = self.grid[0][self.where_is_zero - 3], self.grid[0][self.where_is_zero]
+        self.where_is_zero = self.where_is_zero - 3
+
     def swap_down(self):
-        self.grid[self.where_is_zero], self.grid[self.where_is_zero + 3] = self.grid[self.where_is_zero + 3], self.grid[self.where_is_zero]
+        self.grid[0][self.where_is_zero], self.grid[0][self.where_is_zero + 3] = self.grid[0][self.where_is_zero + 3], self.grid[0][self.where_is_zero]
+        self.where_is_zero = self.where_is_zero + 3
     '''Need list of valid moves'''
     def get_valid_moves(self):
         #since we can categorize the moves into corner/edge/center
@@ -84,6 +97,12 @@ class Structure:
         }
         return valid_moves[self.where_is_zero]
 
+    def set_grid(self, new_state):
+        #Updating with a new state
+        if isinstance(new_state, tuple):
+            new_state = list(new_state)
+        self.grid = numpy.array(new_state).reshape(1, 9)
+        self.where_is_zero = numpy.where(self.grid[0] == 0)[0][0]
 
     #goal state is here
     def are_we_there_yet(self):

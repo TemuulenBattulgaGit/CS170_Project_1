@@ -81,7 +81,7 @@ class AStarSearch(structure):
         print("Goal State not reachable.")
         return None
 
-    @staticmethod
+    @staticmethod #need this to get it to work
     def display_steps_to_goal(path, total_cost):
         print("Solution path to the goal:")
         print(f"Total moves to reach the goal: {len(path)}")
