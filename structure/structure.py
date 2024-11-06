@@ -97,6 +97,18 @@ class Structure:
         }
         return valid_moves[self.where_is_zero]
 
+    def move(self, direction):
+        """Execute a move in the specified direction."""
+        if direction == 'up':
+            self.swap_up()
+        elif direction == 'down':
+            self.swap_down()
+        elif direction == 'left':
+            self.swap_left()
+        elif direction == 'right':
+            self.swap_right()
+        return list(self.grid[0])
+
     def set_grid(self, new_state):
         #Updating with a new state
         if isinstance(new_state, tuple):
@@ -116,6 +128,7 @@ class Structure:
         for num in self.grid[0]:
             val = val*9 + int(num)
         self.state_hash = val
+        return val
 
     #will try to use BFS to test the structure and see how it scales
     def solving_using_bfs(self):

@@ -1,11 +1,12 @@
 from structure.statelist import StateList
 import numpy as np
 import heapq
-from structure import structure
+from structure.structure import Structure
 
-class AStarSearch(structure):
+class AStarSearch(Structure):
     def __init__(self, start_state, goal_state=None, heuristic='missing'):
-        super().__init__()
+        super().__init__(start_state)
+        self.frontier = []
         self.set_grid(start_state)
         self.goal_state = goal_state if goal_state else [1, 2, 3, 4, 5, 6, 7, 8, 0]
         self.tracking = StateList()  #stateList to track visited states
@@ -40,47 +41,37 @@ class AStarSearch(structure):
 
     def search(self):
         """aStar search"""
-        #initializing the priority queue with the start state as tuple
         initial_state_tuple = tuple(self.grid[0])
-        heapq.heappush(self.frontier, (0 + self.heuristic_fn(initial_state_tuple), 0, initial_state_tuple, []))  #(f-cost, g-cost, state, path)
-        initial_hash = self.state_to_hash()  #using structure's state_to_hash function
+        heapq.heappush(self.frontier, (0 + self.heuristic_fn(initial_state_tuple), 0, initial_state_tuple, []))
+        initial_hash = self.state_to_hash()  # getting the hash value, fixing type issue
         self.tracking.__insert__(initial_hash)
 
         while self.frontier:
-            #pop the state with the lowest f-cost (f = g + h)
             f_cost, g_cost, current_state, path = heapq.heappop(self.frontier)
-            #set grid to current state
             self.set_grid(current_state)
             self.expanded_nodes += 1
 
-            #check if current state is the goal state
             if current_state == tuple(self.goal_state):
-                self.display_steps_to_goal(path, g_cost) #for displaying the steps
+                self.display_steps_to_goal(path, g_cost)
                 return path
 
-            #generating valid moves
             for move in self.get_valid_moves():
-                self.set_grid(current_state)  #reset to current state before each move
-                self.move(move)  #execute the move
+                self.set_grid(current_state)
+                self.move(move)
                 new_state_tuple = tuple(self.grid[0])
+                new_hash = self.state_to_hash()  # get hash
 
-                #compute hash and check if this current state has been visited
-                new_hash = self.state_to_hash()
-                if new_hash not in self.tracking: #if not visited before
-                    #new f-cost
-                    new_g_cost = g_cost + 1  #g-cost is +1 per move
-                    # h-cost depends on which heuristic chosen
+                if new_hash not in self.tracking:
+                    new_g_cost = g_cost + 1
                     new_h_cost = self.heuristic_fn(new_state_tuple)
                     new_f_cost = new_g_cost + new_h_cost
                     new_path = path + [(move, new_state_tuple, new_g_cost, new_h_cost)]
 
-                    #if not add it to visited
                     heapq.heappush(self.frontier, (new_f_cost, new_g_cost, new_state_tuple, new_path))
-                    self.tracking.__insert__(new_hash) #mark as visited
+                    self.tracking.__insert__(new_hash)
 
         print("Goal State not reachable.")
         return None
-
     @staticmethod #need this to get it to work
     def display_steps_to_goal(path, total_cost):
         print("Solution path to the goal:")

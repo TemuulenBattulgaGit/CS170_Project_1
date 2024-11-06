@@ -78,6 +78,6 @@ def test_unsolvable_puzzle():
 
 if __name__ == "__main__":
     test_astar_missing_tiles()
-    #test_astar_euclidean()
-    #test_heuristic_functions()
-    #test_unsolvable_puzzle()
+    test_astar_euclidean()
+    test_heuristic_functions()
+    test_unsolvable_puzzle()
